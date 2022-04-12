@@ -3,18 +3,38 @@
 import fs from 'fs'
 import chalk from 'chalk';
 
-function getError(error){
-  throw new Error(error);
+function getError(erro){
+  throw new Error(erro);
 }
 
-function getFile(filepath){
+//ASYNC/AWAIT
+async function pegarArquivo(caminhoDoArquivo){
   const encoding = 'utf-8';
-  fs.readFile(filepath, encoding, (error, data) => {
-    if(error){
-      getError(error);
-    }
-    console.log(chalk.green(data));
-  })
+  try{
+    const texto = await fs.promises.readFile(caminhoDoArquivo, encoding);
+    console.log(chalk.green(texto));
+  }catch(erro){
+    getError(erro);
+  }
 }
 
-getFile('./arquivos/texto1.md');
+//PROMISES
+// function pegarArquivo(caminhoDoArquivo){
+//   const encoding = 'utf-8'
+//   fs.promises
+//   .readFile(caminhoDoArquivo, encoding)
+//   .then((texto) => (console.log(texto)))
+//   .catch((erro) => getError(erro))
+// }
+
+// function pegarArquivo(caminhoDoArquivo){
+//   const encoding = 'utf-8';
+//   fs.readFile(caminhoDoArquivo, encoding, (erro, texto) => {
+//     if(erro){
+//       getError(erro);
+//     }
+//     console.log(chalk.green(texto));
+//   })
+// }
+
+pegarArquivo('./arquivos/texto.md');
